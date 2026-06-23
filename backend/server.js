@@ -1,25 +1,21 @@
+const express = require('express');
 require('dotenv').config();
-const express=require('express');
-const db=require('./config/db');
-const authRoutes = require('./routes/authRoutes');
+const cors = require('cors');
+const db = require('./config/db');
+const authRoute = require('./routes/authRoute');
 
-const app=express();
+const app = express();
+
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.send('Job portal API is Running');
+app.get('/', (req, res) => {
+    res.send('Job Portal API is running...');
 });
 
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authRoute);
 
-const PORT=process.env.PORT || 5000;
-
-app.listen(PORT,async()=>{
-    try{
-        await db.getConnection();
-        console.log("✅ MySQL Connected to Job_portal");
-    }catch(err){
-        console.error("❌ MySQL Connection Failed:", err.message);
-    }
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-})
+});
