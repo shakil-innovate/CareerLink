@@ -1,3 +1,0 @@
-#Project Setup
-npm install express mysql2 dotenv bcrypt jsonwebtoken   //run server,database,load .env file
-npm install --save-dev nodemon       // restart server when change save
