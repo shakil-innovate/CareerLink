@@ -1,4 +1,4 @@
-import { getUserByPhone,getUserByEmail,getUserById, createUser } from "../queries/user.queries.js";
+import { getUserByPhone,getUserByEmail,getUserById, createUser,updateUserProfile } from "../queries/user.queries.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/generateToken.js";
 
@@ -92,13 +92,18 @@ export const login=async(req,res)=>{
 
         const token = generateToken(user);
 
-        user={
-            id:user.id,
-            fullname:user.fullname,
-            email:user.email,
-            phoneNumber:user.phoneNumber,
-            role:user.role,
-            profile:user.profile
+       user = {
+            id: user.id,
+            fullname: user.fullname,
+            email: user.email,
+            phoneNumber: user.phoneNumber,
+            role: user.role,
+            bio: user.bio,
+            skills: user.skills,
+            resume: user.resume,
+            companyId: user.companyId,
+            profilePhoto: user.profilePhoto,
+            isVerified: user.isVerified
         };
 
         res.cookie("token", token, {
@@ -122,7 +127,7 @@ export const login=async(req,res)=>{
 
 export const logout=async(req,res)=>{
     try{
-        req.status(200).cookie("token","",{
+        res.status(200).cookie("token","",{
             maxAge:0
         }).json({
             message:`Loggedout successfully`,
