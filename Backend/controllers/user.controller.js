@@ -148,6 +148,13 @@ export const updateProfile = async (req, res) => {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
 
+          if(!fullname || !email || !phoneNumber ){
+            return res.status(400).json({
+                message:"Missing Requirement fields",
+                success:false
+            });
+        }
+
         const userId = req.id;
 
         let user = await getUserById(userId);
