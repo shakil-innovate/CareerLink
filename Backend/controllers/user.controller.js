@@ -1,6 +1,6 @@
 import { getUserByPhone,getUserByEmail,getUserById, createUser,updateUserProfile } from "../queries/user.queries.js";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/generateToken.js";
+import { generateToken } from "../config/generateToken.js";
 
 
 export const register=async(req,res)=>{

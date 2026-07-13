@@ -1,4 +1,4 @@
-import pool from "../utils/db.js";
+import pool from "../config/db.js";
 
 export const getCompanyByName = async (companyName) => {
     const [rows] = await pool.query(
