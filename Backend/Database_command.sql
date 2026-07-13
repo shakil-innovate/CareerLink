@@ -19,7 +19,7 @@ CREATE TABLE users (
 
     otpExpiry DATETIME,
 
-    role ENUM('Student','Recruiter') NOT NULL DEFAULT 'Student',
+    role ENUM('Student','Recruiter','Admin','User') NOT NULL DEFAULT 'User',
 
     bio TEXT,
 

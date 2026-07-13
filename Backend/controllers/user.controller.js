@@ -40,7 +40,7 @@ export const register=async(req,res)=>{
         await createUser(fullname,email,phoneNumber,hashedPassword,role);
 
         return res.status(201).json({
-            message:`Account created successfully ${fullname}`,
+            message:`Account created successfully, ${fullname}`,
             success:true
         });
 
@@ -111,7 +111,7 @@ export const login=async(req,res)=>{
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
             sameSite:"Strict"
         }).status(200).json({
-            message:`Logged in Successfully  ${user.fullname}`,
+            message:`Logged in Successfully , ${user.fullname}`,
             success:true,
             user
         });
