@@ -3,3 +3,16 @@ npm install
 npm install tailwindcss @tailwindcss/vite
 npm install -D @types/node
 npx shadcn@latest init
+
+npm install react-router-dom axios @reduxjs/toolkit react-redux
+npx shadcn@latest add avatar
+npx shadcn@latest add popover
+
+npx shadcn@latest add label
+npx shadcn@latest add input
+npx shadcn@latest add radio-group
+npm install react-router-dom
+npm install axios
+npm install sonner
+npm install lucide-react
+npx shadcn@latest add sonner
