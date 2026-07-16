@@ -16,3 +16,9 @@ npm install axios
 npm install sonner
 npm install lucide-react
 npx shadcn@latest add sonner
+npm i react-icon
+npx shadcn@latest add carousel
+npx shadcn@latest add badge
+npx shadcn@latest add button
+npm install react-icons
+npx shadcn@latest add table

@@ -25,14 +25,14 @@ const Navbar = () => {
               {" "}
               <Link to={"/Home"}>Home</Link>
             </li>
-            {/* <li>
+            <li>
               {" "}
               <Link to={"/Browse"}>Browse</Link>{" "}
-            </li> */}
-            {/* <li>
+            </li>
+            <li>
               {" "}
               <Link to={"/Jobs"}>Jobs</Link>
-            </li> */}
+            </li>
           </ul>
           {!user ? (
             <div className=" flex items-center gap-2">
