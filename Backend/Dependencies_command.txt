@@ -4,3 +4,5 @@ npm i express mysql2 nodemon jsonwebtoken bcryptjs cookie-parser dotenv cors
 modify package.json: type:module
 dev:    "nodemon index.js"
 npm install multer
+npm i cloudinary
+npm i datauri

@@ -20,18 +20,12 @@ const EditProfileModal = ({ open, setOpen }) => {
   const { user } = useSelector((store) => store.auth);
 
   const [input, setInput] = useState({
-    fullname: user?.fullname ?? "",
-    email: user?.email ?? "",
-    phoneNumber: user?.phoneNumber ?? "",
-    // backend returns user.bio, user.skills, user.resume
-    bio: user?.bio ?? user?.profile?.bio ?? "",
-    // backend expects skills as comma-separated string (it splits on server)
-    skills: Array.isArray(user?.skills)
-      ? user.skills.join(",")
-      : Array.isArray(user?.profile?.skills)
-        ? user.profile.skills.join(",")
-        : "",
-    file: null,
+    fullname: user?.fullname, // Corrected from fullnamename to fullname
+    email: user?.email,
+    phoneNumber: user?.phoneNumber,
+    bio: user?.profile?.bio,
+    skills: user?.profile?.skills?.join(", ") || "",
+    file: user?.profile?.resume,
   });
   const dispatch = useDispatch();
 
@@ -48,13 +42,15 @@ const EditProfileModal = ({ open, setOpen }) => {
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
 
+// Skip file for now
+
     if (input.file) {
       formData.append("file", input.file);
     }
 
     try {
       setLoading(true);
-      const res = await axios.post(
+      const res = await axios.put(
         `${USER_API_ENDPOINT}/profile/update`,
         formData,
         {
@@ -65,6 +61,7 @@ const EditProfileModal = ({ open, setOpen }) => {
         }
       );
       if (res.data.success) {
+        console.log(res.data.user);
         // dispatch(setUser(res.data.user));
         dispatch(setUser({ ...res.data.user, skills: input.skills }));
         toast.success(res.data.message);
@@ -106,7 +103,7 @@ const EditProfileModal = ({ open, setOpen }) => {
                   type="text"
                   id="name"
                   value={input.fullname}
-                  name="name"
+                  name="fullname"
                   onChange={changeEventHandler}
                   className="col-span-3 border border-gray-300 rounded-md p-2"
                 />

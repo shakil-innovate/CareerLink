@@ -36,10 +36,13 @@ const Categories = () => {
         </p>
       </div>
       <Carousel className="w-full   max-w-xl  mx-auto my-10">
-        <CarouselContent>
+      <CarouselContent>
           {Category.map((category, index) => {
             return (
-              <CarouselItem className="md:basis-1/2 lg-basis-1/3 ">
+              <CarouselItem
+                key={index}
+                className="md:basis-1/2 lg:basis-1/3"
+              >
                 <Button>{category}</Button>
               </CarouselItem>
             );

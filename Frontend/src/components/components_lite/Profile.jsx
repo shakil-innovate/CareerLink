@@ -32,13 +32,13 @@ const Profile = () => {
           <div className="flex items-center gap-5">
             <Avatar className="cursor-pointer h-24 w-24">
               <AvatarImage
-                src="https://avatars.githubusercontent.com/u/99532574?v=4"
+                src={user?.profilePhoto || "https://avatars.githubusercontent.com/u/99532574?v=4"}
                 alt="@shadcn"
               />
             </Avatar>
             <div>
               <h1 className=" font-medium text-xl">{user?.fullname}</h1>
-              <p>{user?.profile?.bio}</p>
+              <p>{user?.bio}</p>
             </div>
           </div>
           <Button
@@ -68,10 +68,8 @@ const Profile = () => {
           <div className="my-5">
             <h1>Skills</h1>
             <div className="flex items-center gap-1">
-              {user?.profile?.skills.length !== 0 ? (
-                user?.profile?.skills.map((item, index) => (
-                  <Badge key={index}>{item}</Badge>
-                ))
+              {user?.skills ? (
+                <Badge>{user.skills}</Badge>
               ) : (
                 <span>NA</span>
               )}
@@ -86,11 +84,11 @@ const Profile = () => {
               {isResume ? (
                 <a
                   target="_blank"
-                  href={user?.profile?.resume}
+                  href={user?.resume}
                   className="text-blue-600 hover:underline cursor-pointer"
                 >
                   {/* Download */}
-                  {user?.profile?.resumeOriginalName}
+                  {user?.resumeOriginalName}
                 </a>
               ) : (
                 <span>No Resume Found</span>

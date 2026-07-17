@@ -188,7 +188,7 @@ export const updateProfile = async (req, res) => {
 
         await updateUserProfile(userId,updatedFullname,updatedEmail,updatedPhoneNumber,updatedBio,updatedSkills,profilePhoto);
 
-        user = await getUserById(userId);
+         user = (await getUserById(userId))[0];
 
         return res.status(200).json({
             message: "Profile updated successfully",
