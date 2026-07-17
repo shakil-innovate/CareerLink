@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 import { Contact, Mail, Pen } from "lucide-react";
 import { Badge } from "../ui/badge";
 import AppliedJob from "./AppliedJob";
-// import EditProfileModal from "./EditProfileModal";
+import EditProfileModal from "./EditProfileModal";
 import { useSelector } from "react-redux";
 
 // const skills = [
@@ -107,7 +107,7 @@ const Profile = () => {
       </div>
 
       {/* Edit Profile Modal */}
-      {/* <EditProfileModal open={open} setOpen={setOpen} /> */}
+      <EditProfileModal open={open} setOpen={setOpen} />
     </div>
   );
 };
