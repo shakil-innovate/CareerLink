@@ -23,12 +23,12 @@ const CompaniesTable = () => {
 
   useEffect(() => {
     const filteredCompany =
-      companies.length >= 0 &&
+      companies?.length >= 0 &&
       companies.filter((company) => {
         if (!searchCompanyByText) {
           return true;
         }
-        return company.name
+        return company.companyName
           ?.toLowerCase()
           .includes(searchCompanyByText.toLowerCase());
       });
@@ -54,7 +54,7 @@ const CompaniesTable = () => {
         </TableHeader>
 
         <TableBody>
-          {filterCompany.length === 0 ? (
+          {filterCompany?.length === 0 ? (
             <span>No Companies Added</span>
           ) : (
             filterCompany?.map((company) => (
@@ -63,11 +63,11 @@ const CompaniesTable = () => {
                   <Avatar>
                     <AvatarImage
                       src={company.logo || "default-logo-url"}
-                      alt={`${company.name} logo`}
+                      alt={`${company.companyName} logo`}
                     />
                   </Avatar>
                 </TableCell>
-                <TableCell>{company.name}</TableCell>
+                <TableCell>{company.companyName}</TableCell>
                 <TableCell>{company.createdAt.split("T")[0]}</TableCell>
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
@@ -76,7 +76,7 @@ const CompaniesTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
-                        onClick={() => navigate(`/admin/companies/${company._id}`)}
+                        onClick={() => navigate(`/admin/companies/${company.id}`)}
                         className="flex items-center gap-2 w-fit cursor-pointer"
                       >
                         <Edit2 className="w-4" />

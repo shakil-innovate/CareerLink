@@ -32,7 +32,7 @@ const AdminJobsTable = () => {
         }
         return (
           job.title?.toLowerCase().includes(searchJobByText.toLowerCase()) ||
-          job?.company?.name
+          job?.company?.companyName
             .toLowerCase()
             .includes(searchJobByText.toLowerCase())
         );
@@ -64,7 +64,7 @@ const AdminJobsTable = () => {
           ) : (
             filterJobs?.map((job) => (
               <TableRow key={job.id}>
-                <TableCell>{job?.company?.name}</TableCell>
+                <TableCell>{job?.company?.companyName}</TableCell>
                 <TableCell>{job.title}</TableCell>
                 <TableCell>{job.createdAt.split("T")[0]}</TableCell>
                 <TableCell className="text-right cursor-pointer">
@@ -74,14 +74,14 @@ const AdminJobsTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
-                        onClick={() => navigate(`/admin/companies/${job._id}`)}
+                        onClick={() => navigate(`/admin/companies/${job.id}`)}
                         className="flex items-center gap-2 w-fit cursor-pointer mb-1"
                       >
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </div>
                       <hr />
-                      <div onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)} className="flex items-center gap-2 w-fit cursor-pointer mt-1">
+                      <div onClick={() => navigate(`/admin/jobs/${job.id}/applicants`)} className="flex items-center gap-2 w-fit cursor-pointer mt-1">
                         <Eye className="w-4"></Eye>
                         <span>Applicants</span>
                       </div>

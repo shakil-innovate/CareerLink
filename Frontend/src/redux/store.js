@@ -14,7 +14,12 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+
+import storageModule from "redux-persist/lib/storage";
+
+const storage = storageModule.default ?? storageModule;
+
+
 import applicationSlice from "./applicationSlice";
 const persistConfig = {
   key: "root",
@@ -25,9 +30,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   job: jobSlice,
-  jobs: jobSlice,
-  company: companySlice,
-  company: jobSlice,
+  jobs: jobSlice, // consider removing — do you actually need both job and jobs?
+  company: companySlice.reducer,
   application: applicationSlice,
 });
 
@@ -42,5 +46,7 @@ const store = configureStore({
       },
     }),
 });
+
+export const persistor = persistStore(store);
 
 export default store;

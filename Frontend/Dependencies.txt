@@ -24,3 +24,4 @@ npm install react-icons
 npx shadcn@latest add table
 npx shadcn@latest add dialog
 npm install redux-persist
+npx shadcn@latest add select

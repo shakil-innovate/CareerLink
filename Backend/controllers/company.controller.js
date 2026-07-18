@@ -1,4 +1,5 @@
 import { createCompany, getCompaniesByUserId, getCompanyById, getCompanyByName, updateCompanyById } from "../queries/company.queries.js";
+import cloudinary from "../config/cloud.js"; 
 
 export const registerCompany=async(req,res)=>{
     try{
@@ -115,7 +116,14 @@ export const updateCompany=async(req,res)=>{
         const updatedDescription = description || company.description;
         const updatedWebsite = website || company.website;
         const updatedLocation = location || company.location;
-        const updatedLogo = company.logo;
+        let updatedLogo = company.logo;
+
+
+        if (file) {
+        const fileUri = `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+        const cloudResponse = await cloudinary.uploader.upload(fileUri);
+        updatedLogo = cloudResponse.secure_url;
+        }
 
         await updateCompanyById(companyId,updatedCompanyName,updatedDescription,updatedWebsite,updatedLocation,updatedLogo);
         

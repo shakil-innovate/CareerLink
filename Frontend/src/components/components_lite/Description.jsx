@@ -30,6 +30,8 @@ const Description = () => {
         `${APPLICATION_API_ENDPOINT}/apply/${jobId}`,
         { withCredentials: true }
       );
+
+      console.log(res.data);
       if (res.data.success) {
         setIsApplied(true);
         const updateSingleJob = {
@@ -37,7 +39,7 @@ const Description = () => {
           applications: [...singleJob.applications, { applicant: user?.id }],
         };
         dispatch(setSingleJob(updateSingleJob));
-        console.log(res.data);
+        // console.log(res.data);
         toast.success(res.data.message);
       }
     } catch (error) {

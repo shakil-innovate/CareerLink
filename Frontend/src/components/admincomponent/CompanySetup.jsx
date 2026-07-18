@@ -13,6 +13,11 @@ import useGetCompanyById from "@/hooks/useGetCompanyById.jsx";
 
 const CompanySetup = () => {
   const params = useParams();
+
+
+  console.log("params =", params);
+  console.log("id =", params.id);
+  
   useGetCompanyById(params.id);
   const [input, setInput] = useState({
     name: "",
@@ -77,17 +82,18 @@ const CompanySetup = () => {
 
   useEffect(() => {
     setInput({
-      name: singleCompany.name || "",
-      description: singleCompany.description || "",
-      website: singleCompany.website || "",
-      location: singleCompany.location || "",
-      file: singleCompany.file || null,
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: singleCompany?.file || null,
     });
   }, [singleCompany]);
 
   return (
     <div>
       <Navbar />
+      
       <div className="max-w-xl mx-auto my-10">
         <form onSubmit={submitHandler}>
           <div className="flex items-center gap-5 p-8">

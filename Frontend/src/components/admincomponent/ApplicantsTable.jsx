@@ -54,7 +54,7 @@ const ApplicantsTable = () => {
         <TableBody>
           {applicants &&
             applicants?.applications?.map((item) => (
-              <tr key={item._id}>
+              <tr key={item.id}>
                 <TableCell>{item?.applicant?.fullname}</TableCell>
                 <TableCell>{item?.applicant?.email}</TableCell>
                 <TableCell>{item?.applicant?.phoneNumber}</TableCell>
@@ -83,7 +83,7 @@ const ApplicantsTable = () => {
                        {shortlistingStatus.map((status, index) => {
                           return (
                             <div
-                              onClick={() => statusHandler(status, item?._id)}
+                              onClick={() => statusHandler(status, item?.id)}
                               key={index}
                               className="flex w-fit items-center my-2 cursor-pointer"
                             >
