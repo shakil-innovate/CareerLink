@@ -1,32 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { useParams } from "react-router-dom";
+import { JOB_API_ENDPOINT, APPLICATION_API_ENDPOINT } from "@/utils/data";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setSingleJob } from "@/redux/jobSlice";
+import { toast } from "sonner";
 
 const Description = () => {
-  const isApplied = true;
+  const params = useParams();
+  const jobId = params.id;
+
+  const { singleJob } = useSelector((store) => store.job);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { user } = useSelector((store) => store.auth);
+
+  const isIntiallyApplied =
+    singleJob?.application?.some(
+      (application) => application.applicant === user?.id
+    ) || false;
+  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
+
+  const applyJobHandler = async () => {
+    try {
+      const res = await axios.get(
+        `${APPLICATION_API_ENDPOINT}/apply/${jobId}`,
+        { withCredentials: true }
+      );
+      if (res.data.success) {
+        setIsApplied(true);
+        const updateSingleJob = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?.id }],
+        };
+        dispatch(setSingleJob(updateSingleJob));
+        console.log(res.data);
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    const fetchSingleJobs = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
+          withCredentials: true,
+        });
+        console.log("API Response:", res.data);
+       if (res.data.success) {
+          dispatch(setSingleJob(res.data.job));
+
+          setIsApplied(
+            res.data.job.applications?.some(
+              (application) => application.applicant === user?.id
+            ) || false
+          );
+        } else {
+          setError("Failed to fetch jobs.");
+        }
+      } catch (error) {
+        console.error("Fetch Error:", error);
+        setError(error.message || "An error occurred.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSingleJobs();
+  }, [jobId, dispatch, user?.id]);
+  console.log("single jobs", singleJob);
+
+  if (!singleJob) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className="max-w-7xl mx-auto my-10 ">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="font-bold text-xl ">Title</h1>
+            <h1 className="font-bold text-xl ">{singleJob?.title}</h1>
             <div className=" flex gap-2 items-center mt-4 ">
               <Badge className={" text-blue-600 font-bold"} variant={"ghost"}>
-                10 Position
+                {singleJob?.position} Open Positions
               </Badge>
               <Badge className={" text-[#FA4F09] font-bold"} variant={"ghost"}>
-                20 LPA
+                {singleJob?.salary}LPA
               </Badge>
               <Badge className={" text-[#6B3AC2]  font-bold"} variant={"ghost"}>
-                Remote
+                {singleJob?.location}
               </Badge>
               <Badge className={" text-black font-bold"} variant={"ghost"}>
-                Full Time
+                {singleJob?.jobType}
               </Badge>
             </div>
           </div>
           <div>
             <Button
+              onClick={isApplied ? null : applyJobHandler}
               disabled={isApplied}
               className={`rounded-lg ${
                 isApplied
@@ -39,37 +118,50 @@ const Description = () => {
           </div>
         </div>
         <h1 className="border-b-2 border-b-gray-400 font-medium py-4">
-          Job Description
+          {singleJob?.description}
         </h1>
         <div className="my-4">
           <h1 className="font-bold my-1 ">
             Role:{" "}
             <span className=" pl-4 font-normal text-gray-800">
-              Software Engineer
+              {singleJob?.position} Open Positions
             </span>
           </h1>
           <h1 className="font-bold my-1 ">
             Location:{" "}
-            <span className=" pl-4 font-normal text-gray-800">Remote</span>
+            <span className=" pl-4 font-normal text-gray-800">
+              {" "}
+              {singleJob?.location}
+            </span>
           </h1>
           <h1 className="font-bold my-1 ">
             Salary:{" "}
             <span className=" pl-4 font-normal text-gray-800">
-              $50,000 - $80,000
+              {singleJob?.salary} LPA
             </span>
           </h1>
           <h1 className="font-bold my-1 ">
             Experience:{" "}
-            <span className=" pl-4 font-normal text-gray-800">3 years</span>
+            <span className=" pl-4 font-normal text-gray-800">
+              {singleJob?.experienceLevel} Year
+            </span>
+          </h1>
+          <h1 className="font-bold my-1 ">
+            Total Applicants:{" "}
+            <span className=" pl-4 font-normal text-gray-800">
+              {singleJob?.applications?.length}
+            </span>
           </h1>
           <h1 className="font-bold my-1 ">
             Job Type:
-            <span className=" pl-4 font-normal text-gray-800"> Full Time</span>
+            <span className=" pl-4 font-normal text-gray-800">
+              {singleJob?.jobType}
+            </span>
           </h1>
           <h1 className="font-bold my-1 ">
-            Total Applicants:
+            Post Date:
             <span className=" pl-4 font-normal text-gray-800">
-            10
+              {singleJob?.createdAt.split("T")[0]}
             </span>
           </h1>
         </div>

@@ -31,7 +31,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      dispatch(setLoading(true));
+      dispatch(setLoading(true)); // Start loading
       const res = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -42,13 +42,9 @@ const Login = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
-      const errorMessage = error.response
-        ? error.response.data.message
-        : "An unexpected error occurred.";
-      toast.error(errorMessage);
+      toast.error("Login failed");
     } finally {
-      dispatch(setLoading(false));
+      dispatch(setLoading(false)); // End loading
     }
   };
 
@@ -63,7 +59,6 @@ const Login = () => {
           <h1 className="font-bold text-xl mb-5 text-center text-blue-600">
             Login
           </h1>
-
           <div className="my-2">
             <Label>Email</Label>
             <Input
@@ -84,7 +79,6 @@ const Login = () => {
               placeholder="********"
             ></Input>
           </div>
-
           <div className="flex items-center justify-between">
             <RadioGroup className="flex items-center gap-4 my-5 ">
               <div className="flex items-center space-x-2">
@@ -111,6 +105,7 @@ const Login = () => {
               </div>
             </RadioGroup>
           </div>
+
           {loading ? (
             <div className="flex items-center justify-center my-10">
               <div className="spinner-border text-blue-600" role="status">
@@ -118,7 +113,10 @@ const Login = () => {
               </div>
             </div>
           ) : (
-            <button className="w-3/4 py-3 my-3 text-white flex items-center justify-center max-w-7xl mx-auto bg-blue-600 hover:bg-blue-800/90 rounded-md">
+            <button
+              type="submit"
+              className="w-3/4 py-3 my-3 text-white flex items-center justify-center max-w-7xl mx-auto bg-blue-600 hover:bg-blue-800/90 rounded-md"
+            >
               Login
             </button>
           )}

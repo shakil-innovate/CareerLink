@@ -10,7 +10,6 @@ import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "@/redux/authSlice";
 
-
 const Register = () => {
   const [input, setInput] = useState({
     fullname: "",
@@ -159,7 +158,7 @@ const Register = () => {
           ) : (
             <button
               type="submit"
-                className="block w-full py-3 my-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="block w-full py-3 my-3 text-white bg-primary hover:bg-primary/90 rounded-md"
             >
               Register
             </button>

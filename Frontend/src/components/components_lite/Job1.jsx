@@ -5,68 +5,97 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
 
-const Job1 = () => {
+const Job1 = ({ job }) => {
+  // Destructure properties from the job object.
+  const {
+    company,
+    title,
+    description,
+    position,
+    salary,
+    location,
+    jobType,
+    id,
+  } = job;
+
+  // For bookmarking feature
+  const [isBookmarked, setIsBookmarked] = React.useState(false);
+
+  // Navigation hook
   const navigate = useNavigate();
-  const jobId = "jdfj";
+  const daysAgo = (mongodbTime) => {
+    const createdAt = new Date(mongodbTime);
+    const currentTime = new Date();
+    const timeDiff = currentTime - createdAt;
+    return Math.floor(timeDiff / (1000 * 24 * 60 * 60));
+  };
+
   return (
-    <div className=" p-5 rounded-md shadow-xl bg-white  border border-gray-200 cursor-pointer hover:shadow-2xl hover:shadow-blue-200 hover:p-3 ">
-      <div className="flex  items-center justify-between">
-        {" "}
-        <p className="text-sm text-gray-600">3 days ago</p>
-        <Button variant="outline" className=" rounded-full " size="icon">
-          <Bookmark />
-        </Button>{" "}
+    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-200 cursor-pointer hover:shadow-2xl hover:shadow-blue-200 hover:p-3">
+      {/* Job time and bookmark button */}
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-gray-600">
+          {daysAgo(job?.createdAt) === 0
+            ? "Today"
+            : `${daysAgo(job?.createdAt)} days ago`}
+        </p>
+        <Button
+          variant="outline"
+          className="rounded-full"
+          size="icon"
+          onClick={() => setIsBookmarked(!isBookmarked)}
+        >
+          {isBookmarked ? <BookMarked /> : <Bookmark />}
+        </Button>
       </div>
 
-      <div className="flex items-center gap-2 my-2 ">
-        <Button className=" p-6" variant="outline" size="icon">
+      {/* Company info and avatar */}
+      <div className="flex items-center gap-2 my-2">
+        <Button className="p-6" variant="outline" size="icon">
           <Avatar>
-            <AvatarImage src="https://images.openai.com/static-rsc-4/Dv2isuYUpu4YsW99JYdkTU_Il8VA8JC_dD6gVa7-NIteWviC1D9uMPu1jK4CabIiRDJrAx0f-4OtML-Yko5YTS6xr1UbfqhpK2HycmEyB2ausyE7sOp5CTj-CVPZd5lNBtXRUK_Ei63s2KsiV2vTDBeyLWtkt3X61VirQfvXExSNvI-rPgbSfkmVs4LqbKwq?purpose=fullsize"></AvatarImage>
+            <AvatarImage
+              src={job?.company?.logo}
+            />
           </Avatar>
         </Button>
         <div>
-          <h1 className="text-lg font-medium">Company Name</h1>
-          <p className="text-sm text-gray-600">Bangladesh</p>
+          <h1 className="text-lg font-medium">{company?.name}</h1>
+          <p className="text-sm text-gray-600">India</p>
         </div>
       </div>
 
+      {/* Job title, description, and job details */}
       <div>
-        <div>
-          <h2 className="font-bold text-lg my-2">Job Title</h2>
-          <p className="text-sm text-gray-600">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, aliquam
-            impedit numquam esse.
-          </p>
-        </div>
-        <div className=" flex gap-2 items-center mt-4 ">
-          <Badge className={" text-blue-600 font-bold"} variant={"ghost"}>
-            10 Position
+        <h2 className="font-bold text-lg my-2">{title}</h2>
+        <p className="text-sm text-gray-600">{description}</p>
+        <div className="flex gap-2 items-center mt-4">
+          <Badge className="text-blue-600 font-bold" variant="ghost">
+            {position} Open Positions
           </Badge>
-          <Badge className={" text-[#FA4F09] font-bold"} variant={"ghost"}>
-            20 LPA
+          <Badge className="text-[#FA4F09] font-bold" variant="ghost">
+            {salary} LPA
           </Badge>
-          <Badge className={" text-[#6B3AC2]  font-bold"} variant={"ghost"}>
-            Remote
+          <Badge className="text-[#6B3AC2] font-bold" variant="ghost">
+            {location}
           </Badge>
-          <Badge className={" text-black font-bold"} variant={"ghost"}>
-            Full Time
+          <Badge className="text-black font-bold" variant="ghost">
+            {jobType}
           </Badge>
         </div>
       </div>
 
+      {/* Actions: Details and Save for Later */}
       <div className="flex items-center gap-4 mt-4">
         <Button
-          onClick={() => {
-            navigate(`/description/${jobId}`);
-          }}
+          onClick={() => navigate(`/description/${id}`)}
           variant="outline"
-          className="  font-bold rounded-sm "
+          className="font-bold rounded-sm"
         >
           Details
         </Button>
         <Button
           variant="outline"
-          className="bg-[#6B3AC2] text-white font-bold rounded-sm "
+          className="bg-[#6B3AC2] text-white font-bold rounded-sm"
         >
           Save For Later
         </Button>
@@ -76,3 +105,81 @@ const Job1 = () => {
 };
 
 export default Job1;
+
+// import React from "react";
+// import { Button } from "../ui/button";
+// import { Bookmark, BookMarked } from "lucide-react";
+// import { Avatar, AvatarImage } from "../ui/avatar";
+// import { Badge } from "../ui/badge";
+// import { useNavigate } from "react-router-dom";
+
+// const Job1 = (job) => {
+//   console.log("Job data++:", job);
+//   const navigate = useNavigate();
+//   const jobId = "jdfj";
+
+//   return (
+//     <div className=" p-5 rounded-md shadow-xl bg-white  border border-gray-200 cursor-pointer hover:shadow-2xl hover:shadow-blue-200 hover:p-3 ">
+//       <div className="flex  items-center justify-between">
+//         {" "}
+//         <p className="text-sm text-gray-600">3 days ago</p>
+//         <Button variant="outline" className=" rounded-full " size="icon">
+//           <Bookmark />
+//         </Button>{" "}
+//       </div>
+
+//       <div className="flex items-center gap-2 my-2 ">
+//         <Button className=" p-6" variant="outline" size="icon">
+//           <Avatar>
+//             <AvatarImage src="https://yt3.googleusercontent.com/Kbk6fvLQH3X7q6zGb7I-TLDH_2FFA6WZXoKZty5kjlm7nqHxUcQVgv420shK0Z_qN4sp841RVcY=s900-c-k-c0x00ffffff-no-rj"></AvatarImage>
+//           </Avatar>
+//         </Button>
+//         <div>
+//           <h1 className="text-lg font-medium">{job.company.name}</h1>
+//           <p className="text-sm text-gray-600">India</p>
+//         </div>
+//       </div>
+
+//       <div>
+//         <div>
+//           <h2 className="font-bold text-lg my-2">{job?.title}</h2>
+//           <p className="text-sm text-gray-600">{job.description} </p>
+//         </div>
+//         <div className=" flex gap-2 items-center mt-4 ">
+//           <Badge className={" text-blue-600 font-bold"} variant={"ghost"}>
+//             {job.position}
+//           </Badge>
+//           <Badge className={" text-[#FA4F09] font-bold"} variant={"ghost"}>
+//             {job.salary}LPA
+//           </Badge>
+//           <Badge className={" text-[#6B3AC2]  font-bold"} variant={"ghost"}>
+//             {job.location}
+//           </Badge>
+//           <Badge className={" text-black font-bold"} variant={"ghost"}>
+//             {job.jobType}
+//           </Badge>
+//         </div>
+//       </div>
+
+//       <div className="flex items-center gap-4 mt-4">
+//         <Button
+//           onClick={() => {
+//             navigate(`/description/${job.id}`);
+//           }}
+//           variant="outline"
+//           className="  font-bold rounded-sm "
+//         >
+//           Details
+//         </Button>
+//         <Button
+//           variant="outline"
+//           className="bg-[#6B3AC2] text-white font-bold rounded-sm "
+//         >
+//           Save For Later
+//         </Button>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Job1;

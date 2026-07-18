@@ -37,6 +37,8 @@ CREATE TABLE users (
 
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP
+    ALTER TABLE users
+    ADD resumeOriginalName VARCHAR(255);
 );
 
 

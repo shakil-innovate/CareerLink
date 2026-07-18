@@ -1,11 +1,24 @@
 import { getUserByPhone,getUserByEmail,getUserById, createUser,updateUserProfile } from "../queries/user.queries.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../config/generateToken.js";
+import getDataUri from "../config/datauri.js";
+import cloudinary from "../config/cloud.js";
 
 
 export const register=async(req,res)=>{
     try{
         const {fullname,email,phoneNumber,password,role}=req.body;
+
+        const file = req.file;
+
+        let profilePhoto = null;
+
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
+            profilePhoto = cloudResponse.secure_url;
+        }
          
 
         if(!fullname || !email || !phoneNumber || !password || !role){
@@ -37,7 +50,7 @@ export const register=async(req,res)=>{
 
         const hashedPassword=await bcrypt.hash(password,10);
 
-        await createUser(fullname,email,phoneNumber,hashedPassword,role);
+        await createUser(fullname,email,phoneNumber,hashedPassword,role,profilePhoto);
 
         return res.status(201).json({
             message:`Account created successfully, ${fullname}`,
@@ -72,7 +85,21 @@ export const login=async(req,res)=>{
             });
         }
 
+
+
         user=user[0];
+
+        if (user.skills) {
+            try {
+                    user.skills = JSON.parse(user.skills);
+                } catch (err) {
+                    user.skills = [];
+                 }
+        } 
+        else {
+            user.skills = [];
+        }
+
 
         const isMatch=await bcrypt.compare(password,user.password);
 
@@ -148,6 +175,8 @@ export const updateProfile = async (req, res) => {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
 
+
+
           if(!fullname || !email || !phoneNumber ){
             return res.status(400).json({
                 message:"Missing Requirement fields",
@@ -156,8 +185,11 @@ export const updateProfile = async (req, res) => {
         }
 
         const userId = req.id;
+        
+        let user = (await getUserById(userId))[0];
+        let resume = user.resume;
+        let resumeOriginalName = user.resumeOriginalName;
 
-        let user = await getUserById(userId);
 
         if (!user) {
             return res.status(404).json({
@@ -171,9 +203,13 @@ export const updateProfile = async (req, res) => {
 
         if (file) {
             const fileUri = getDataUri(file);
-            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+             const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+                    resource_type: "raw",   // important for PDF
+                });
 
-            profilePhoto = cloudResponse.secure_url;
+            resume = cloudResponse.secure_url;
+            resumeOriginalName = file.originalname;
+
         }
 
         // Keep old values if new ones are not provided
@@ -186,7 +222,7 @@ export const updateProfile = async (req, res) => {
             ? JSON.stringify(skills.split(","))
             : user.skills;
 
-        await updateUserProfile(userId,updatedFullname,updatedEmail,updatedPhoneNumber,updatedBio,updatedSkills,profilePhoto);
+        await updateUserProfile(userId,updatedFullname,updatedEmail,updatedPhoneNumber,updatedBio,updatedSkills,profilePhoto,resume,resumeOriginalName);
 
          user = (await getUserById(userId))[0];
 

@@ -7,22 +7,17 @@ import { Badge } from "../ui/badge";
 import AppliedJob from "./AppliedJob";
 import EditProfileModal from "./EditProfileModal";
 import { useSelector } from "react-redux";
+import useGetAppliedJobs from "@/hooks/useGetAllAppliedJobs";
 
-// const skills = [
-//   "React",
-//   "JavaScript",
-//   "HTML",
-//   "CSS",
-//   "Python",
-//   "Node.js",
-//   "Tailwind CSS",
-//   "Docker",
-//   "Kubernetes",
-// ];
-const isResume = true;
+ 
 const Profile = () => {
+  useGetAppliedJobs();
   const [open, setOpen] = useState(false);
   const { user } = useSelector((store) => store.auth);
+
+  
+const isResume = !!user?.resume;
+
   return (
     <div>
       <Navbar />
@@ -32,7 +27,7 @@ const Profile = () => {
           <div className="flex items-center gap-5">
             <Avatar className="cursor-pointer h-24 w-24">
               <AvatarImage
-                src={user?.profilePhoto || "https://avatars.githubusercontent.com/u/99532574?v=4"}
+                src={user?.profilePhoto}
                 alt="@shadcn"
               />
             </Avatar>
@@ -68,8 +63,10 @@ const Profile = () => {
           <div className="my-5">
             <h1>Skills</h1>
             <div className="flex items-center gap-1">
-              {user?.skills ? (
-                <Badge>{user.skills}</Badge>
+              {user?.skills.length !== 0 ? (
+                user?.skills.map((item, index) => (
+                  <Badge key={index}>{item}</Badge>
+                ))
               ) : (
                 <span>NA</span>
               )}
@@ -87,7 +84,7 @@ const Profile = () => {
                   href={user?.resume}
                   className="text-blue-600 hover:underline cursor-pointer"
                 >
-                  {/* Download */}
+                  Download
                   {user?.resumeOriginalName}
                 </a>
               ) : (
