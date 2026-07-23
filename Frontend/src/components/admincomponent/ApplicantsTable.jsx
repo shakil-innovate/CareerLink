@@ -24,7 +24,7 @@ const ApplicantsTable = () => {
     console.log("called");
     try {
       axios.defaults.withCredentials = true;
-      const res = await axios.post(
+      const res = await axios.put(
         `${APPLICATION_API_ENDPOINT}/status/${id}/update`,
         { status }
       );
@@ -53,13 +53,13 @@ const ApplicantsTable = () => {
         </TableHeader>
         <TableBody>
           {applicants &&
-            applicants?.applications?.map((item) => (
+            applicants?.map((item) => (
               <tr key={item.id}>
-                <TableCell>{item?.applicant?.fullname}</TableCell>
-                <TableCell>{item?.applicant?.email}</TableCell>
-                <TableCell>{item?.applicant?.phoneNumber}</TableCell>
+                <TableCell>{item.fullname}</TableCell>
+                <TableCell>{item.email}</TableCell>
+                <TableCell>{item.phoneNumber}</TableCell>
                 <TableCell>
-                  {item.applicant?.profile?.resume ? (
+                  {item.resume ? (
                     <a
                       className="text-blue-600 cursor-pointer"
                       href={item?.applicant?.profile?.resume}
@@ -73,7 +73,7 @@ const ApplicantsTable = () => {
                     <span>NA</span>
                   )}
                 </TableCell>
-                <TableCell>{item?.applicant?.createdAt.split("T")[0]}</TableCell>
+                <TableCell>{item.createdAt.split("T")[0]}</TableCell>
                 <TableCell className="float-right cursor-pointer">
                   <Popover>
                     <PopoverTrigger>
