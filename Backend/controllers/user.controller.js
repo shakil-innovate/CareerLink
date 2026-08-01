@@ -169,27 +169,23 @@ export const logout=async(req,res)=>{
     }
 }
 
-
 export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         const file = req.file;
 
-
-
-          if(!fullname || !email || !phoneNumber ){
+        if (!fullname || !email || !phoneNumber) {
             return res.status(400).json({
-                message:"Missing Requirement fields",
-                success:false
+                message: "Missing Requirement fields",
+                success: false
             });
         }
 
         const userId = req.id;
-        
+
         let user = (await getUserById(userId))[0];
         let resume = user.resume;
         let resumeOriginalName = user.resumeOriginalName;
-
 
         if (!user) {
             return res.status(404).json({
@@ -203,13 +199,12 @@ export const updateProfile = async (req, res) => {
 
         if (file) {
             const fileUri = getDataUri(file);
-             const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-                    resource_type: "raw",   // important for PDF
-                });
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+                resource_type: "raw",   // important for PDF
+            });
 
             resume = cloudResponse.secure_url;
             resumeOriginalName = file.originalname;
-
         }
 
         // Keep old values if new ones are not provided
@@ -222,9 +217,20 @@ export const updateProfile = async (req, res) => {
             ? JSON.stringify(skills.split(","))
             : user.skills;
 
-        await updateUserProfile(userId,updatedFullname,updatedEmail,updatedPhoneNumber,updatedBio,updatedSkills,profilePhoto,resume,resumeOriginalName);
+        await updateUserProfile(userId, updatedFullname, updatedEmail, updatedPhoneNumber, updatedBio, updatedSkills, profilePhoto, resume, resumeOriginalName);
 
-         user = (await getUserById(userId))[0];
+        user = (await getUserById(userId))[0];
+
+        // 🔴 THIS PART WAS MISSING — parse skills back into a real array
+        if (user.skills) {
+            try {
+                user.skills = JSON.parse(user.skills);
+            } catch (e) {
+                user.skills = [];
+            }
+        } else {
+            user.skills = [];
+        }
 
         return res.status(200).json({
             message: "Profile updated successfully",

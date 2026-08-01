@@ -60,7 +60,7 @@ const Job1 = ({ job }) => {
         </Button>
         <div>
           <h1 className="text-lg font-medium">{company?.name}</h1>
-          <p className="text-sm text-gray-600">India</p>
+          <p className="text-sm text-gray-600">{job?.location}</p>
         </div>
       </div>
 
