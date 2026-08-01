@@ -32,8 +32,8 @@
               allAppliedJobs?.map((appliedJob) => (
                 <TableRow key={appliedJob.id}>
                   <TableCell>{appliedJob?.createdAt.split("T")[0]}</TableCell>
-                  <TableCell>{appliedJob.job?.title}</TableCell>
-                <TableCell>{appliedJob.job?.companyId}</TableCell>
+                  <TableCell>{appliedJob.title}</TableCell>
+                <TableCell>{appliedJob.companyName}</TableCell>
                   <TableCell className="text-right">
                     <Badge
                       className={`${
