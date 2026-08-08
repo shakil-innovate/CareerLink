@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components_lite/Navbar";
+import Footer from "../components_lite/Footer";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import CompaniesTable from "./CompaniesTable";
+import CompaniesTable from "./CompaniesTable";  
 import { useNavigate } from "react-router-dom";
 
 import useGetAllCompanies from "@/hooks/usegetAllCompanies";
@@ -37,6 +38,7 @@ const Companies = () => {
           <CompaniesTable />
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

@@ -34,7 +34,7 @@ const AdminJobs = () => {
           </Button>
         </div>
         <div>
-          <AdminJobsTable />
+          <AdminJobsTable/>
         </div>
       </div>
       <Footer/>
