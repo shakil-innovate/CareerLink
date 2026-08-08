@@ -74,7 +74,7 @@ const CompaniesTable = () => {
                     <PopoverTrigger>
                       <MoreHorizontal />
                     </PopoverTrigger>
-                    <PopoverContent className="w-32">
+                    <PopoverContent className="w-32  bg-gray-100">
                       <div
                         onClick={() => navigate(`/admin/companies/${company.id}`)}
                         className="flex items-center gap-2 w-fit cursor-pointer"
