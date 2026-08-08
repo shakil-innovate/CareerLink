@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
+
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
@@ -183,7 +184,7 @@ const EditProfileModal = ({ open, setOpen }) => {
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait{" "}
                 </Button>
               ) : (
-                <Button type="submit" className="w-full my-4">
+                <Button type="submit" className="w-full my-4 bg-blue-500 hover:bg-blue-600">
                   Save
                 </Button>
               )}
