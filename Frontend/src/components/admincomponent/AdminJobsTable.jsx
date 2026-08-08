@@ -32,7 +32,7 @@ const AdminJobsTable = () => {
         }
         return (
           job.title?.toLowerCase().includes(searchJobByText.toLowerCase()) ||
-          job?.company?.companyName
+          job?.company?.name
             .toLowerCase()
             .includes(searchJobByText.toLowerCase())
         );
