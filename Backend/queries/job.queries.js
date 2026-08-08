@@ -37,11 +37,25 @@ export const getAllJobsDatabase = async (keyword) => {
 
 export const getAdminJobsDatabase = async (adminId) => {
     const [rows] = await pool.query(
-        `SELECT * FROM jobs
-         WHERE createdBy = ?
-         ORDER BY createdAt DESC`,
+        `SELECT jobs.*,
+                companies.id AS company_id,
+                companies.companyName AS company_companyName,
+                companies.logo AS company_logo,
+                companies.location AS company_location
+         FROM jobs
+         JOIN companies ON jobs.companyId = companies.id
+         WHERE jobs.createdBy = ?
+         ORDER BY jobs.createdAt DESC`,
         [adminId]
     );
 
-    return rows;
+    return rows.map((row) => ({
+        ...row,
+        company: {
+            id: row.company_id,
+            name: row.company_companyName,
+            logo: row.company_logo,
+            location: row.company_location,
+        },
+    }));
 };
