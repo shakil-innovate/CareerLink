@@ -23,7 +23,7 @@ const EditProfileModal = ({ open, setOpen }) => {
     fullname: user?.fullname, // Corrected from fullnamename to fullname
     email: user?.email,
     phoneNumber: user?.phoneNumber,
-    bio: user?.profile?.bio,
+    bio: user?.bio,
     skills: user?.profile?.skills?.join(", ") || "",
     file: user?.profile?.resume,
   });
@@ -63,7 +63,7 @@ const EditProfileModal = ({ open, setOpen }) => {
       if (res.data.success) {
         console.log(res.data.user);
         // dispatch(setUser(res.data.user));
-        dispatch(setUser({ ...res.data.user, skills: input.skills }));
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -84,7 +84,7 @@ const EditProfileModal = ({ open, setOpen }) => {
 
   return (
     <div>
-      <Dialog open={open}>
+      <Dialog open={open} onOpenChange={setOpen}> 
         <DialogContent
           className="sm:max-w-125"
           onInteractOutside={() => setOpen(false)}
