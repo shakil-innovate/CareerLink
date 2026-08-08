@@ -70,9 +70,9 @@ const AdminJobsTable = () => {
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
                     <PopoverTrigger>
-                      <MoreHorizontal />
+                      <MoreHorizontal/>
                     </PopoverTrigger>
-                    <PopoverContent className="w-32">
+                    <PopoverContent className="w-32 bg-gray-100">
                       <div
                         onClick={() => navigate(`/admin/companies/${job.id}`)}
                         className="flex items-center gap-2 w-fit cursor-pointer mb-1"
@@ -80,7 +80,7 @@ const AdminJobsTable = () => {
                         <Edit2 className="w-4" />
                         <span>Edit</span>
                       </div>
-                      <hr />
+                      {/* <hr /> */}
                       <div onClick={() => navigate(`/admin/jobs/${job.id}/applicants`)} className="flex items-center gap-2 w-fit cursor-pointer mt-1">
                         <Eye className="w-4"></Eye>
                         <span>Applicants</span>
