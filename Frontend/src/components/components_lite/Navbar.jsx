@@ -95,7 +95,7 @@ const Navbar = () => {
                   />
                 </Avatar>
               </PopoverTrigger>
-              <PopoverContent className="w-80">
+              <PopoverContent className="w-80  bg-gray-100">
                 <div className="flex items-center gap-4 space-y-2">
                   <Avatar className="cursor-pointer">
                     <AvatarImage
@@ -111,7 +111,7 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col my-2 text-gray-600  ">
+                <div className="flex flex-col my-2 text-gray-600 ">
                   {user && user.role === "Student" && (
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <User2></User2>
