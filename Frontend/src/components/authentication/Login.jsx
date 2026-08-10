@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { USER_API_ENDPOINT } from "@/utils/data.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading, setUser } from "@/redux/authSlice";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const [input, setInput] = useState({
@@ -107,11 +108,10 @@ const Login = () => {
           </div>
 
           {loading ? (
-            <div className="flex items-center justify-center my-10">
-              <div className="spinner-border text-blue-600" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
-            </div>
+               <button disabled className="w-3/4 py-3 my-3 text-white flex items-center justify-center gap-2 max-w-7xl mx-auto bg-blue-600 rounded-md">
+                 <Loader2 className="h-4 w-4 animate-spin" />
+                    Please wait
+               </button>
           ) : (
             <button
               type="submit"
