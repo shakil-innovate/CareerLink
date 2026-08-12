@@ -55,7 +55,7 @@ const Login = () => {
       <div className="flex items-center justify-center max-w-7xl mx-auto">
         <form
           onSubmit={submitHandler}
-          className="w-1/2 border border-gray-500 rounded-md p-4 my-10"
+          className="w-1/4 border border-gray-1000 rounded-md p-4 my-10 bg-gray-100"
         >
           <h1 className="font-bold text-xl mb-5 text-center text-blue-600">
             Login
@@ -63,12 +63,13 @@ const Login = () => {
           <div className="my-2">
             <Label>Email</Label>
             <Input
-              type="email"
+              type="Email"
               value={input.email}
               name="email"
               onChange={changeEventHandler}
               placeholder="johndoe@gmail.com"
-            ></Input>
+            >
+            </Input>
           </div>
           <div className="my-2">
             <Label>Password</Label>
@@ -81,15 +82,15 @@ const Login = () => {
             ></Input>
           </div>
           <div className="flex items-center justify-between">
-            <RadioGroup className="flex items-center gap-4 my-5 ">
+            <RadioGroup className="flex items-center gap-6 my-4">
               <div className="flex items-center space-x-2">
-                <Input
+                <input
                   type="radio"
                   name="role"
                   value="Student"
-                  checked={input.role === "Student"}
+                  checked={input.role=="Student"}
                   onChange={changeEventHandler}
-                  className="cursor-pointer"
+                  className="cursor pointer"
                 />
                 <Label htmlFor="r1">Student</Label>
               </div>
@@ -108,24 +109,24 @@ const Login = () => {
           </div>
 
           {loading ? (
-               <button disabled className="w-3/4 py-3 my-3 text-white flex items-center justify-center gap-2 max-w-7xl mx-auto bg-blue-600 rounded-md">
+               <button disabled className="w-3/4 py-1.5 my-1 text-white flex items-center justify-center gap-2 max-w-7xl mx-auto bg-blue-600 rounded-md">
                  <Loader2 className="h-4 w-4 animate-spin" />
                     Please wait
                </button>
-          ) : (
+          ) : ( 
             <button
               type="submit"
-              className="w-3/4 py-3 my-3 text-white flex items-center justify-center max-w-7xl mx-auto bg-blue-600 hover:bg-blue-800/90 rounded-md"
+              className="w-3/4 py-1.5 my-1 text-white flex items-center justify-center max-w-7xl mx-auto bg-blue-600 hover:bg-blue-800/90 rounded-md"
             >
               Login
             </button>
           )}
 
           <div className=" ">
-            <p className="text-gray-700  text-center my-2">
+            <p className="text-gray-700  text-center mt-2">
               Create new Account{" "}
               <Link to="/register" className="text-blue-700">
-                <button className=" w-1/2 py-3 my-3 text-white flex items-center justify-center max-w-7xl mx-auto bg-green-600 hover:bg-green-800/90 rounded-md">
+                <button className=" w-1/3 py-1.5 my-3 text-white flex items-center justify-center max-w-7xl mx-auto bg-green-600 hover:bg-green-800/90 rounded-md">
                   Register
                 </button>
               </Link>
