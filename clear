@@ -1,0 +1,45 @@
+[33m2a9ffe2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev-shakil[m[33m)[m add to styling at loging and register page,but still have a issue
+[33m411919a[m[33m ([m[1;32mmain[m[33m)[m add certificate
+[33mfbf9f69[m[33m ([m[1;31morigin/main[m[33m)[m remove tract of .env file
+[33m7fdb0ef[m add animation at login page
+[33m589f98e[m fix register button ,,import Loader2
+[33mcd95445[m connect database with aiven
+[33m98da2c0[m fix save button
+[33m3af7711[m fix register button
+[33m83cf6d5[m fix edit profile section
+[33mf681023[m fix logo and name of company
+[33m3685dad[m fixed job company related query,done join
+[33mbe38cea[m fix name error with previous database update
+[33m44f3d87[m join company table and job table
+[33m40fcaf7[m replace jobs id with company name in table
+[33mbc4fa44[m add a background to the popover content of 3 dot option at companies table
+[33m19b91a2[m add a background to the popover content of profile
+[33m720e388[m add a background to the popover content of 3 dot pointer
+[33m22e5e6c[m add footer at admin jobs page
+[33m033ce82[m fix mouse cursor when put on button
+[33m4c2097f[m fix applied job section company name and title
+[33md3a38fa[m fix user profile section applied job
+[33m7a28149[m fix some bug about applicant of a job
+[33mca56a6c[m solve reqruiter profile and task ,create company,post job,cloudinary
+[33m05641c3[m work job browser,details,profile photo,work cloudinary
+[33mc9afdbd[m complete edit profile section but don't work with cloudinary,just create id on cloudinary and something related task
+[33m6b00782[m fix edit profile skills/bio mapping
+[33mcff4290[m primarily complete profile section
+[33mdf8a07b[m complete signin,register page
+[33mfd15ad6[m complete frontend setup
+[33m428b3ba[m complete upto apply related task
+[33maae0d59[m complete job controller,api,database task
+[33m918b8ed[m rename utils to config
+[33meb3f291[m rename utils to config
+[33me791186[m complete companies's auth related task
+[33m0f11785[m user endpoint ok
+[33m90f6d66[m s
+[33m48ec516[m task complete upto login,logout,updateprofile
+[33m51f6cd4[m complete database schema
+[33m706c3f4[m Delete all file
+[33me59af5b[m add dependecis for react and add signup and signin page
+[33m9a59b96[m rename authRoutes.js to authRoute.js
+[33m31531af[m file transfer of backend related to the backend
+[33m9239afe[m done signin and signup
+[33m56eb105[m Ignore .env file
+[33ma68eed8[m first commit
